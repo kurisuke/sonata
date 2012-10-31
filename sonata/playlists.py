@@ -90,11 +90,13 @@ class Playlists(object):
             self.actionGroupPlaylists = None
         self.actionGroupPlaylists = gtk.ActionGroup('MPDPlaylists')
         self.UIManager().ensure_update()
-        actions = [("Playlist: %s" % playlist.replace("&", ""),
-                gtk.STOCK_JUSTIFY_CENTER,
-                misc.unescape_html(playlist), None, None,
-                self.on_playlist_menu_click)
-                for playlist in playlistinfo]
+        actions = [
+            ("Playlist: %s" % playlist.replace("&", ""),
+             gtk.STOCK_JUSTIFY_CENTER,
+             ui.quote_label(misc.unescape_html(playlist)),
+             None, None,
+             self.on_playlist_menu_click)
+            for playlist in playlistinfo]
         self.actionGroupPlaylists.add_actions(actions)
         uiDescription = """
             <ui>
@@ -211,8 +213,8 @@ class Playlists(object):
             playlistinfo.sort(key=lambda x: x.lower())
             for item in playlistinfo:
                 self.playlistsdata.append([gtk.STOCK_JUSTIFY_FILL, item])
-            if self.mpd.version >= (0, 13):
-                self.populate_playlists_for_menu(playlistinfo)
+
+            self.populate_playlists_for_menu(playlistinfo)
 
     def on_playlist_rename(self, _action):
         plname = self.prompt_for_playlist_name(_("Rename Playlist"),

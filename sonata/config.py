@@ -14,7 +14,7 @@ from __future__ import with_statement
 import os
 import ConfigParser
 
-from consts import consts
+import consts
 from library import library_set_data
 from library import library_get_data
 import misc

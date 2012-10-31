@@ -13,7 +13,7 @@ import ui
 import misc
 import mpdhelper as mpdh
 import threading
-from consts import consts
+import consts
 from pluginsystem import pluginsystem
 
 

@@ -66,7 +66,7 @@ class MPDHelper(object):
         # after the initial client connection.
         try:
             version = getattr(self._client, "mpd_version", "0.0")
-            return version.split(".")
+            return tuple(int(x) for x in version.split("."))
         except:
             # XXX what exception are we expecting here!?
             return (0, 0)
@@ -94,7 +94,7 @@ class MPDHelper(object):
             dirs.append(os.path.dirname(path))
         dirs = remove_list_duplicates(dirs, True)
 
-        if len(dirs) > 32 and self.version >= (0, 14):
+        if len(dirs) > 32:
             self._client.update('/')
         else:
             self._client.command_list_ok_begin()

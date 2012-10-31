@@ -61,7 +61,7 @@ import img
 import tray
 import formatting
 
-from consts import consts
+import consts
 from pluginsystem import pluginsystem
 from config import Config
 
@@ -1051,13 +1051,22 @@ class Base(object):
 
         profile_names = [_("MPD_HOST/PORT")] if host \
                 or port else self.config.profile_names
-        actions = [(str(i), None,
-            "[%s] %s" % (i + 1, name.replace("_", "__")), None,
-            None, i)
-            for i, name in enumerate(profile_names)]
-        actions.append(('disconnect', gtk.STOCK_DISCONNECT, _('Disconnect'),
-                        None, None, len(self.config.profile_names)))
 
+        actions = [
+            (str(i),
+             None,
+             "[%d] %s" % (i + 1, ui.quote_label(name)),
+             None,
+             None,
+             i)
+            for i, name in enumerate(profile_names)]
+        actions.append((
+            'disconnect',
+            gtk.STOCK_DISCONNECT,
+            _('Disconnect'),
+            None,
+            None,
+            len(self.config.profile_names)))
         active_radio = 0 if host or port else self.config.profile_num
         if not self.conn:
             active_radio = len(self.config.profile_names)
@@ -2832,7 +2841,7 @@ class Base(object):
                                 self.tooltip_set_ignore_toggle_signal_false)
 
     def systemtray_click(self, _widget, event):
-        # Clicking on an egg system tray icon:
+        # Clicking on a system tray icon:
         # Left button shows/hides window(s)
         if event.button == 1 and not self.ignore_toggle_signal:
             self.systemtray_activate(None)
@@ -3429,8 +3438,7 @@ class Base(object):
                 for menu in ['add', 'replace', 'playafter', 'rm']:
                     self.UIManager.get_widget('/mainmenu/%smenu/' % \
                                              (menu,)).show()
-                if self.playlists_selection.count_selected_rows() == 1 and \
-                   self.mpd.version >= (0, 13):
+                if self.playlists_selection.count_selected_rows() == 1:
                     self.UIManager.get_widget('/mainmenu/renamemenu/').show()
                 else:
                     self.UIManager.get_widget('/mainmenu/renamemenu/').hide()
