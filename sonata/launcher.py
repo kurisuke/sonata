@@ -24,6 +24,7 @@ if sys.version_info <= (3, 2):
     sys.exit(1)
 
 import gettext
+import locale
 import logging
 import os
 import platform
@@ -94,6 +95,8 @@ def run():
         # files.
         locales_path = None
 
+    locale.setlocale(locale.LC_ALL, '')
+    locale.bindtextdomain('sonata', locales_path)
     gettext.install('sonata', locales_path, names=["ngettext"])
     gettext.textdomain('sonata')
     gettext.bindtextdomain('sonata', locales_path)
