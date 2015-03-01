@@ -1,3 +1,9 @@
+"""Sonata is a simple GTK+ client for the Music Player Daemon.
+"""
+
+__author__ = "Scott Horowitz"
+__email__ = "stonecrest@gmail.com"
+
 __license__ = """
 Sonata, an elegant GTK+ client for the Music Player Daemon
 

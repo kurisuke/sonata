@@ -53,6 +53,7 @@ from sonata import preferences, tagedit, \
 from sonata.song import SongRecord
 
 from sonata.version import version
+from sonata import __license__
 
 class Base:
 
